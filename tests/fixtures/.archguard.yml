@@ -1,0 +1,33 @@
+version: 1
+
+services:
+  - name: auth-service
+    path: auth_service/
+    public_api:
+      - path: auth_service/api.py
+    may_import_from: []
+
+  - name: user-service
+    path: user_service/
+    public_api:
+      - path: user_service/api.py
+    may_import_from:
+      - auth-service
+
+  - name: payment-service
+    path: payment_service/
+    public_api:
+      - path: payment_service/api.py
+    may_import_from:
+      - user-service
+
+  - name: notification-service
+    path: notification_service/
+    public_api: []
+    may_import_from:
+      - payment-service
+
+rules:
+  - no_circular_dependencies: true
+  - enforce_public_api_contracts: true
+  - no_internal_imports: true
