@@ -1,6 +1,7 @@
 # notification_service/sender.py
 # This is a boundary violation! models is not public api of payment_service
-from payment_service.models import PaymentRecord
+
+from payment_service.models import PaymentRecord # noqa: F401
 
 def send_notification():
     pass
