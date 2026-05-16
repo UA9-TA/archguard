@@ -1,0 +1,35 @@
+version: 1
+
+services:
+  - name: auth-service
+    path: sample_arch/auth_service/
+    public_api:
+      - path: sample_arch/auth_service/api/*
+        schema: sample_arch/auth_service/openapi.yml
+    may_import_from: []
+
+  - name: user-service
+    path: sample_arch/user_service/
+    public_api:
+      - path: sample_arch/user_service/api/*
+        schema: sample_arch/user_service/openapi.yml
+    may_import_from:
+      - auth-service
+
+  - name: payment-service
+    path: sample_arch/payment_service/
+    public_api:
+      - path: sample_arch/payment_service/api/*
+        schema: sample_arch/payment_service/openapi.yml
+    may_import_from:
+      - user-service
+
+  - name: notification-service
+    path: sample_arch/notification_service/
+    may_import_from:
+      - payment-service
+
+rules:
+  - no_circular_dependencies: true
+  - enforce_public_api_contracts: true
+  - no_internal_imports: true
