@@ -1,0 +1,39 @@
+[project]
+name = "archguard"
+version = "0.1.0"
+description = "Enforce microservice architecture rules across repos — catch circular deps and contract violations before merge"
+authors = [{name = "UA9-TA", email = "vkrmsatsangi@gmail.com"}]
+keywords = ["microservices", "architecture", "cli", "developer-tools", "devops", "platform-engineering"]
+dependencies = [
+    "typer>=0.12", "rich>=13", "anthropic>=0.25",
+    "pyyaml>=6.0", "networkx>=3.0", "jsonschema>=4.0",
+    "tomli>=2.0; python_version < '3.11'",
+    "deepdiff>=7.0.0"
+]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "pytest-mock", "pytest-cov"]
+
+[project.scripts]
+archguard = "archguard.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/UA9-TA/archguard"
+Changelog = "https://github.com/UA9-TA/archguard/blob/main/CHANGELOG.md"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--ignore=tests/fixtures"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
